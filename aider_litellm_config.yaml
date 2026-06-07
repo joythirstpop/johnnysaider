@@ -3,9 +3,9 @@ model_list:
     litellm_params:
       model: openai/qwen-3.6-27b
       api_base: http://127.0.0.1:8080/v1
-      api_key: local
+      api_key: sk-local
   - model_name: qwen-editor
     litellm_params:
       model: openai/qwen-3.5-9b
       api_base: http://127.0.0.1:8081/v1
-      api_key: local
+      api_key: sk-local

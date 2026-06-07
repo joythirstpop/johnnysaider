@@ -70,6 +70,6 @@ sleep 30
 
 # 4. Launch Aider in the FOREGROUND (Normal UI)
 # Pointing Aider to Headroom (8787) instead of LiteLLM (4000)
-export OPENAI_API_KEY=local
+export OPENAI_API_KEY=sk-local
 export AIDER_OPENAI_API_BASE=http://127.0.0.1:8787/v1
 /home/jimshit/.local/bin/aider
