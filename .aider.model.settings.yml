@@ -6,7 +6,6 @@
     max_tokens: 8192
     temperature: 0.6
     top_p: 0.95
-    top_k: 20
 
 - name: openai/qwen-editor
   edit_format: editor-diff
@@ -15,4 +14,3 @@
     max_tokens: 4096
     temperature: 0.6
     top_p: 0.95
-    top_k: 20
