@@ -50,9 +50,11 @@ tmux new-window -t $SESSION -n "aider"
 tmux send-keys -t $SESSION:3 "export OPENAI_API_KEY=local" C-m
 tmux send-keys -t $SESSION:3 "export AIDER_OPENAI_API_BASE=http://127.0.0.1:4000" C-m
 tmux send-keys -t $SESSION:3 \
-  "/home/jimshit/.local/bin/aider --architect \
+  "/home/jimshit/.local/bin/aider" --architect \
    --model openai/qwen-architect \
    --editor-model openai/qwen-editor \
+   --edit-format diff \
+   --suggest-shell-commands \
    --map-tokens 4096" C-m
 
 tmux attach-session -t $SESSION:3
