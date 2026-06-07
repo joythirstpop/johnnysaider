@@ -15,6 +15,8 @@ router_settings:
   model_group_alias:
     "openai/qwen-architect": "qwen-architect"
     "openai/qwen-editor": "qwen-editor"
+    "/home/jimshit/Qwen3.6-27B-AWQ-INT4": "qwen-architect"
+    "qwen3.6-27b-awq-int4": "qwen-architect"
 
 general_settings:
   disable_health_check: true
