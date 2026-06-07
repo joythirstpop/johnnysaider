@@ -6,7 +6,6 @@ editor-model: openai/qwen-editor
 architect: true
 auto-accept-architect: false
 yes-always: false
-edit-format: diff
 map-tokens: 8192
 suggest-shell-commands: true
 cache-prompts: true

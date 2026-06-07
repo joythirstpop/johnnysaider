@@ -1,5 +1,4 @@
-- name: openai/qwen-architect
-  edit_format: diff
+- name: local/qwen-architect
   use_repo_map: true
   reasoning_tag: think
   extra_params:
