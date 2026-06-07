@@ -2,12 +2,12 @@ model_list:
   - model_name: qwen-architect
     litellm_params:
       model: custom_openai/qwen-architect
-      api_base: http://127.0.0.1:8080/v1
+      api_base: http://127.0.0.1:8090/v1
       api_key: sk-local
   - model_name: qwen-editor
     litellm_params:
       model: custom_openai/qwen-editor
-      api_base: http://127.0.0.1:8081/v1
+      api_base: http://127.0.0.1:8091/v1
       api_key: sk-local
 
 router_settings:
@@ -17,5 +17,4 @@ router_settings:
     "openai/qwen-editor": "qwen-editor"
 
 general_settings:
-  master_key: sk-local
   disable_health_check: true
