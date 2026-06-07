@@ -56,7 +56,10 @@ tmux send-keys -t $SESSION:3 \
   "litellm --config /home/jimshit/aider_litellm_config.yaml --port 4000" C-m
 
 # 3. Start Headroom Automatic Janitor Proxy
-# This wraps LiteLLM and automatically crushes context on the 3060ti.
+# Using sk-local consistently across the stack
+export OPENAI_API_KEY=sk-local
+export OPENAI_API_BASE=http://127.0.0.1:4000/v1
+
 tmux new-window -t $SESSION -n "headroom"
 tmux send-keys -t $SESSION:4 \
   "CUDA_VISIBLE_DEVICES=1 $HEADROOM_BIN proxy \
@@ -69,7 +72,5 @@ echo "Initializing models (Wait 30s)..."
 sleep 30
 
 # 4. Launch Aider in the FOREGROUND (Normal UI)
-# Pointing Aider to Headroom (8787) instead of LiteLLM (4000)
-export OPENAI_API_KEY=sk-local
 export AIDER_OPENAI_API_BASE=http://127.0.0.1:8787/v1
 /home/jimshit/.local/bin/aider
