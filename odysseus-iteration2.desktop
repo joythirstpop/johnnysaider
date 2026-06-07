@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Odysseus Iteration 2
+Comment=Launches Odysseus with shared 3090 model configuration
+Path=/home/jimshit/odysseus
+Exec=env TERM=xterm-256color /home/jimshit/odysseus/venv/bin/python -m aider --openai-api-base http://localhost:8080/v1 --model local-model --mcp-server "{'name': 'context-janitor', 'command': '/home/jimshit/odysseus/venv/bin/python', 'args': ['/home/jimshit/odysseus/mcp_servers/janitor_mcp.py']}" --mcp-server "{'name': 'playwright', 'command': 'npx', 'args': ['-y', '@playwright/mcp@latest', '--headless']}" --mcp-server "{'name': 'odysseus-rag', 'command': '/home/jimshit/odysseus/venv/bin/python', 'args': ['/home/jimshit/odysseus/mcp_servers/rag_server.py']}" --mcp-server "{'name': 'odysseus-memory', 'command': '/home/jimshit/odysseus/venv/bin/python', 'args': ['/home/jimshit/odysseus/mcp_servers/memory_server.py']}" --mcp-server "{'name': 'odysseus-search', 'command': '/home/jimshit/odysseus/venv/bin/python', 'args': ['/home/jimshit/odysseus/mcp_servers/search_server.py']}"
+Icon=utilities-terminal
+Terminal=true
+Categories=Development;Utility;
+StartupNotify=false
