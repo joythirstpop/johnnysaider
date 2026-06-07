@@ -1,9 +1,9 @@
 model_list:
-  - model_name: qwen-architect
+  - model_name: openai/qwen-architect
     litellm_params:
       model: llama_cpp/qwen-3.6-27b
       api_base: http://127.0.0.1:8080/v1
-  - model_name: qwen-editor
+  - model_name: openai/qwen-editor
     litellm_params:
       model: llama_cpp/qwen-3.5-9b
       api_base: http://127.0.0.1:8081/v1
