@@ -1,0 +1,5 @@
+*.gguf
+venv/
+__pycache__/
+.aider*
+*.log
