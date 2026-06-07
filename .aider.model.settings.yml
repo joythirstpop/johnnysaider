@@ -3,7 +3,7 @@
   use_repo_map: true
   reasoning_tag: think
   extra_params:
-    max_tokens: 4096
+    max_tokens: 8192
     temperature: 0.6
     top_p: 0.95
     top_k: 20
