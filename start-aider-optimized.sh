@@ -1,42 +1,58 @@
 #!/bin/bash
-# Simplified Aider Launch - ONLY RTX 3090 (GPU 0)
-# No 3060 Ti, No separate embedding server for now.
+# SOTA Dual-GPU Aider Setup
+# GPU 0 (3090): Qwen 3.6 27B (Architect) -> The Brain
+# GPU 1 (3060ti): Qwen 3.5 9B (Editor)   -> The Hands
 
-SESSION="aider-3090"
-MODEL_PATH="/home/jimshit/Qwen3.6-27B-Q4_K_M-MTP-GGUF/Qwen3.6-27B-Q4_K_M-mtp.gguf"
+SESSION="aider-sota"
+ARCHITECT_MODEL="/home/jimshit/Qwen3.6-27B-Q4_K_M-MTP-GGUF/Qwen3.6-27B-Q4_K_M-mtp.gguf"
+EDITOR_MODEL="/home/jimshit/qwen3.5-9b/Qwen3.5-9B-UD-Q4_K_XL.gguf"
 LLAMA_SERVER="/home/jimshit/llama.cpp/build/bin/llama-server"
 
 # Cleanup
 tmux kill-session -t $SESSION 2>/dev/null
 pkill -9 -f llama-server
-# Ensure port 8080 is definitely clear
-fuser -k 8080/tcp 2>/dev/null
+pkill -9 -f litellm
+# Clear ports 8080, 8081, and the LiteLLM port 4000
+fuser -k 8080/tcp 8081/tcp 4000/tcp 2>/dev/null
 
-tmux new-session -d -s $SESSION -n "qwen-server"
+tmux new-session -d -s $SESSION -n "architect"
 
-# Start Qwen Server on GPU 0
-# Physical cores: 6 (-t 6 -tb 6)
-# Updated reasoning flag to avoid deprecation warning
+# 1. Start Architect (3090) using llama-server
+# Using MTP and Reasoning for maximum "smartness"
 tmux send-keys -t $SESSION:0 \
   "CUDA_VISIBLE_DEVICES=0 $LLAMA_SERVER \
-   -m $MODEL_PATH \
-   -c 32768 \
-   -fa on \
-   -t 6 -tb 6 \
+   -m $ARCHITECT_MODEL \
+   -c 32768 -fa on -t 6 -tb 6 \
    --poll 100 --prio 3 \
    --spec-type draft-mtp --spec-draft-n-max 3 \
-   --temp 0.6 --top-p 0.95 --top-k 20 --repeat-penalty 1.0 \
-   --reasoning on \
-   --port 8080 \
-   --n-gpu-layers 99" C-m
+   --reasoning on --port 8080 --n-gpu-layers 99" C-m
 
-echo "Starting server on RTX 3090... (Wait 10s)"
-sleep 10
+# 2. Start Editor (3060 Ti) using llama-server
+# Using Reasoning for smarter diff application
+tmux new-window -t $SESSION -n "editor"
+tmux send-keys -t $SESSION:1 \
+  "CUDA_VISIBLE_DEVICES=1 $LLAMA_SERVER \
+   -m $EDITOR_MODEL \
+   -c 16384 -fa on -t 4 -tb 4 \
+   --reasoning on --port 8081 --n-gpu-layers 99" C-m
 
-# Launch Aider
+# 3. Start LiteLLM (Switchboard)
+# LiteLLM only exists to let Aider talk to both llama-servers at once
+tmux new-window -t $SESSION -n "proxy"
+tmux send-keys -t $SESSION:2 \
+  "litellm --config /home/jimshit/aider_litellm_config.yaml --port 4000" C-m
+
+echo "Initializing llama-servers on 3090 and 3060ti..."
+sleep 30
+
+# 4. Launch Aider
 tmux new-window -t $SESSION -n "aider"
-tmux send-keys -t $SESSION:1 "export OPENAI_API_KEY=local" C-m
-tmux send-keys -t $SESSION:1 "export AIDER_OPENAI_API_BASE=http://127.0.0.1:8080/v1" C-m
-tmux send-keys -t $SESSION:1 "/home/jimshit/.local/bin/aider --model openai/qwen-3.6-27b-mtp" C-m
+tmux send-keys -t $SESSION:3 "export OPENAI_API_KEY=local" C-m
+tmux send-keys -t $SESSION:3 "export AIDER_OPENAI_API_BASE=http://127.0.0.1:4000" C-m
+tmux send-keys -t $SESSION:3 \
+  "/home/jimshit/.local/bin/aider --architect \
+   --model openai/qwen-architect \
+   --editor-model openai/qwen-editor \
+   --map-tokens 4096" C-m
 
-tmux attach-session -t $SESSION:1
+tmux attach-session -t $SESSION:3
