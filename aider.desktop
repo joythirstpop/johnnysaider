@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Aider
+Comment=Launch Optimized Qwen 3.6 27B MTP Aider Stack
+Exec=gnome-terminal -- /home/jimshit/start-agent.sh
+Icon=utilities-terminal
+Terminal=false
+Categories=Development;
