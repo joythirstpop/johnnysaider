@@ -12,9 +12,9 @@ suggest-shell-commands: true
 cache-prompts: true
 
 # Self-Healing Loop Configuration
-test-cmd: /home/jimshit/odysseus/venv/bin/pytest
+test-cmd: pytest
 auto-test: true
-lint-cmd: /home/jimshit/odysseus/venv/bin/ruff check
+lint-cmd: ruff check
 auto-lint: true
 
 # MCP Tools for Autonomous Research (Web Search, RAG, Memory, Playwright, Janitor)
