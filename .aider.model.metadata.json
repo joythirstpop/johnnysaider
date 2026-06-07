@@ -1,6 +1,6 @@
 {
     "openai/qwen-architect": {
-        "max_input_tokens": 32768,
+        "max_input_tokens": 65536,
         "max_output_tokens": 8192,
         "input_cost_per_token": 0.0,
         "output_cost_per_token": 0.0,

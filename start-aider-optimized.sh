@@ -24,10 +24,12 @@ echo "Launching SOTA Stack (3090 Brain + 3060ti Janitor) in background..."
 tmux new-session -d -s $SESSION -n "3090-architect"
 
 # Architect (3090)
+# Scaled to 64k context using q8_0 cache quantization (SOTA efficiency)
 tmux send-keys -t $SESSION:0 \
   "CUDA_VISIBLE_DEVICES=0 $LLAMA_SERVER \
    -m $ARCHITECT_MODEL \
-   -c 32768 -fa on -t 6 -tb 6 \
+   -c 65536 -fa on -t 6 -tb 6 \
+   --cache-type-k q8_0 --cache-type-v q8_0 \
    --poll 100 --prio 3 \
    --spec-type draft-mtp --spec-draft-n-max 3 \
    --reasoning on --port 8080 --n-gpu-layers 99" C-m
