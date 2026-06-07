@@ -17,11 +17,8 @@ pkill -9 -f litellm
 fuser -k 8080/tcp 8081/tcp 8082/tcp 4000/tcp 2>/dev/null
 
 tmux new-session -d -s $SESSION -n "architect"
-# Enable mouse support for scrolling and selection
+# Enable mouse support for scrolling
 tmux set -g mouse on
-# Copy tmux selection to system clipboard automatically
-tmux bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -in -selection clipboard"
-tmux bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -in -selection clipboard"
 
 # 1. Start Architect (3090) using llama-server
 tmux send-keys -t $SESSION:0 \
