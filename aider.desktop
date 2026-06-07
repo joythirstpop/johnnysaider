@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 Name=Aider
 Comment=Launch Optimized Qwen 3.6 27B MTP Aider Stack
-Exec=wezterm start -- /home/jimshit/start-agent.sh
+Exec=env DRI_PRIME=pci-0000_00_02_0 wezterm start -- /home/jimshit/start-agent.sh
 Icon=utilities-terminal
 Terminal=false
 Categories=Development;
