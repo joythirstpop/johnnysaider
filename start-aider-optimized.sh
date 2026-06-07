@@ -13,9 +13,12 @@ LLAMA_SERVER="/home/jimshit/llama.cpp/build/bin/llama-server"
 tmux kill-session -t $SESSION 2>/dev/null
 pkill -9 -f llama-server
 pkill -9 -f litellm
+# Clear ports
 fuser -k 8080/tcp 8081/tcp 8082/tcp 4000/tcp 2>/dev/null
 
 tmux new-session -d -s $SESSION -n "architect"
+# Enable mouse support for scrolling
+tmux set -g mouse on
 
 # 1. Start Architect (3090) using llama-server
 tmux send-keys -t $SESSION:0 \
