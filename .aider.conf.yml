@@ -1,0 +1,37 @@
+# SOTA Agentic Configuration for Aider
+# Goal: Make Aider as autonomous as Gemini CLI
+
+model: openai/qwen-architect
+editor-model: openai/qwen-editor
+architect: true
+auto-accept-architect: false
+yes-always: false
+edit-format: diff
+map-tokens: 8192
+suggest-shell-commands: true
+cache-prompts: true
+
+# MCP Tools for Autonomous Research (Web Search, RAG, Memory, Playwright, Janitor)
+mcp-server:
+  - name: odysseus-search
+    command: /home/jimshit/odysseus/venv/bin/python
+    args:
+      - /home/jimshit/odysseus/mcp_servers/search_server.py
+  - name: odysseus-rag
+    command: /home/jimshit/odysseus/venv/bin/python
+    args:
+      - /home/jimshit/odysseus/mcp_servers/rag_server.py
+  - name: odysseus-memory
+    command: /home/jimshit/odysseus/venv/bin/python
+    args:
+      - /home/jimshit/odysseus/mcp_servers/memory_server.py
+  - name: context-janitor
+    command: /home/jimshit/odysseus/venv/bin/python
+    args:
+      - /home/jimshit/odysseus/mcp_servers/janitor_mcp.py
+  - name: playwright
+    command: npx
+    args:
+      - -y
+      - "@playwright/mcp@latest"
+      - "--headless"

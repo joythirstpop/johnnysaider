@@ -1,0 +1,18 @@
+- name: openai/qwen-architect
+  edit_format: diff
+  use_repo_map: true
+  reasoning_tag: think
+  extra_params:
+    max_tokens: 4096
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+
+- name: openai/qwen-editor
+  edit_format: editor-diff
+  reasoning_tag: think
+  extra_params:
+    max_tokens: 4096
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20

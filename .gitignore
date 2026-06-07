@@ -1,5 +1,8 @@
 *.gguf
 venv/
 __pycache__/
-.aider*
+.aider.chat.history.md
+.aider.input.history
+.aider.llm.history
+
 *.log
