@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Hermes Iteration 4 (SOTA)
+Comment=Launch Dual-GPU SOTA Hermes Stack
+Exec=env DRI_PRIME=pci-0000_00_02_0 wezterm start --cwd "/home/jimshit/Documents/iteration 4" -- "/home/jimshit/Documents/iteration 4/launch_iter4.sh"
+Icon=utilities-terminal
+Terminal=false
+Categories=Development;Utility;
+StartupNotify=false
